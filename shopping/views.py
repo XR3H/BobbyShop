@@ -15,7 +15,7 @@ class ItemView(APIView):
     def get(self, request, id=None):
         data = None
         if(not id):
-            items_data = ItemReadSerializer( Item.objects.all(), many=True)
+            items_data = ItemReadSerializer( Item.objects.all(), many=True )
             return Response( status=status.HTTP_200_OK, data={"data":items_data.data} )
         try:
             item = Item.objects.get(id=id)
