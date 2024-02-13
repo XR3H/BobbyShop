@@ -1,8 +1,13 @@
 from django.db import models
 from django.db.models import Model
 
+class Category(Model):
+    class Meta:
+        db_table = 'category'
 
-# Create your models here.
+    title = models.CharField(max_length=45, null=False, blank=False)
+    description = models.TextField(null=True, blank=True)
+    fk_parent_category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.CASCADE)
 
 class Item(Model):
     class Meta:
@@ -14,6 +19,7 @@ class Item(Model):
     title = models.CharField(null=False, blank=False, max_length=80)
     description = models.TextField(null=True, blank=True)
     cost = models.FloatField(null=False, blank=False)
+    category = models.ForeignKey(Category, null=False, blank=False, on_delete=models.RESTRICT)
 
     @property
     def attributes(self):

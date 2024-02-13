@@ -21,6 +21,7 @@ class ItemView(APIView):
             item = Item.objects.get(id=id)
         except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST, data={ 'message': 'Invalid id' })
+
         item_data = ItemReadSerializer(item)
         return Response(status=status.HTTP_200_OK, data={'data': item_data.data})
 
@@ -30,7 +31,10 @@ class ItemView(APIView):
             item_data.is_valid()
         except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Data is not valid!"})
-        item_data.save()
+        try:
+            item_data = ItemReadSerializer( item_data.save() )
+        except:
+            return Response(status=status.HTTP_200_OK, data={"message": "Invalid data provided!"})
         return Response(status=status.HTTP_200_OK, data={'data':item_data.data})
 
     def put(self, request, id=None):
@@ -45,7 +49,10 @@ class ItemView(APIView):
             item_data.is_valid()
         except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Data is not valid!"})
-        item_data.save()
+        try:
+            item_data = ItemReadSerializer( item_data.save() )
+        except Exception:
+            return Response(status=status.HTTP_200_OK, data={"message": "Invalid data provided!"})
         return Response( status=status.HTTP_200_OK, data={"message": item_data.data} )
 
     def delete(self, request, id=None):
