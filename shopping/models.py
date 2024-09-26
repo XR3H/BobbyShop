@@ -23,7 +23,8 @@ class Item(Model):
 
     @property
     def attributes(self):
-        return ItemAttribute.objects.filter(fk_item=self)
+        # print(self.itemattribute_set.all())
+        return ItemAttribute.objects.filter(fk_item=self).select_related('fk_attribute')
 
 class Attribute(Model):
     class Meta:
@@ -50,5 +51,5 @@ class ItemAttribute(Model):
             item_id=self.fk_item.id,
             value=self.value,
             attribute=self.fk_attribute,
-            attribute_id=self.fk_item.id
+            attribute_id=self.fk_attribute.id
         )

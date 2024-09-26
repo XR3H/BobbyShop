@@ -1,4 +1,5 @@
 import django.http
+from django.core import cache
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.generics import ListAPIView
@@ -8,6 +9,7 @@ from shopping.models import *
 from shopping.serializers import *
 from rest_framework.viewsets import *
 import rest_framework.permissions as permissions
+from shopping.repositories import items_repo
 
 # Create your views here.
 
@@ -15,10 +17,14 @@ class ItemView(APIView):
     def get(self, request, id=None):
         data = None
         if(not id):
-            items_data = ItemReadSerializer( Item.objects.all(), many=True )
+            # Spread logit to whole project
+            items_data = ItemReadSerializer(
+                items_repo.all_items_with_attributes(),
+                many=True
+            )
             return Response( status=status.HTTP_200_OK, data={"data":items_data.data} )
         try:
-            item = Item.objects.get(id=id)
+            item = items_repo.get_item_with_attributes(id)
         except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST, data={ 'message': 'Invalid id' })
 
@@ -32,7 +38,9 @@ class ItemView(APIView):
         except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Data is not valid!"})
         try:
-            item_data = ItemReadSerializer( item_data.save() )
+            item_data = ItemReadSerializer(
+                items_repo.get_item_with_attributes( item_data.save().id )
+            )
         except:
             return Response(status=status.HTTP_200_OK, data={"message": "Invalid data provided!"})
         return Response(status=status.HTTP_200_OK, data={'data':item_data.data})
@@ -41,7 +49,7 @@ class ItemView(APIView):
         if not id:
             return Response("No item id stated in request!")
         try:
-            item = Item.objects.get(id=id)
+            item = items_repo.get_item(id)
         except Exception:
             return Response( status=status.HTTP_400_BAD_REQUEST, data={"message": f"No item with id={id}!"} )
         item_data = ItemSerializer(instance=item, data=request.data)
@@ -59,7 +67,7 @@ class ItemView(APIView):
         if not id:
             return Response("No item id stated in request!")
         try:
-            item = Item.objects.get(id=id)
+            item = items_repo.get_item(id)
         except Exception:
             return Response( status=status.HTTP_400_BAD_REQUEST, data={"message" : f"No item with id={id}"} )
         item.delete()

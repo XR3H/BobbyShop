@@ -17,7 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from bobby_shop import settings
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('shopping/', include('shopping.urls'))
+    path('shopping/', include('shopping.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        path('silk/', include('silk.urls', namespace='silk'))
+    ]
