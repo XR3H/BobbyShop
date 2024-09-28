@@ -76,12 +76,15 @@ class ItemSerializer(serializers.Serializer):
                     attr.delete()
             # The rest of request attributes (new) have to be created
             for attr in attributes_data:
-                ItemAttribute.objects.create(
+                attr_data = ItemAttribute.objects.create(
                     fk_item=instance,
                     # fk_attribute=attr.get('attribute'),
                     fk_attribute_id=attr.get('attribute'),
                     value=attr.get('value')
                 )
+                # New attribute data to be cached
+                cached_attrs.append(attr_data)
+
             instance._prefetched_objects_cache = {'itemattribute_set': cached_attrs}
         return instance
 
