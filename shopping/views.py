@@ -60,7 +60,7 @@ class ItemView(APIView):
         try:
             item_data = ItemReadSerializer( item_data.save() )
         except Exception:
-            return Response(status=status.HTTP_200_OK, data={"message": "Invalid data provided!"})
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Invalid data provided!"})
         return Response( status=status.HTTP_200_OK, data={"message": item_data.data} )
 
     def delete(self, request, id=None):

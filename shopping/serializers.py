@@ -89,24 +89,17 @@ class ItemSerializer(serializers.Serializer):
         return instance
 
 
-class AttributeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Attribute
-        fields='__all__'
-
 class ItemAttributeReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemAttribute
         exclude = ('id', 'fk_item')
+        depth = 1
 
-    fk_attribute = AttributeSerializer(many=False, read_only=True)
-
-class ItemReadSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    title = serializers.CharField(allow_null=False)
-    description = serializers.CharField(allow_null=True)
-    cost = serializers.FloatField()     #digits and null/blank, validator
+class ItemReadSerializer(serializers.ModelSerializer):
     itemattribute_set = ItemAttributeReadSerializer(many=True, read_only=True)
+    class Meta:
+        model = Item
+        exclude = ('category',)
 
 
 
