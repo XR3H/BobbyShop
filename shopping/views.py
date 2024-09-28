@@ -42,7 +42,7 @@ class ItemView(APIView):
                 items_repo.get_item_with_attributes( item_data.save().id )
             )
         except:
-            return Response(status=status.HTTP_200_OK, data={"message": "Invalid data provided!"})
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Invalid data provided!"})
         return Response(status=status.HTTP_200_OK, data={'data':item_data.data})
 
     def put(self, request, id=None):
