@@ -14,6 +14,8 @@ from shopping.repositories import items_repo
 # Create your views here.
 
 class ItemView(APIView):
+    permission_classes = [AdministrationPermission, ]
+
     def get(self, request, id=None):
         data = None
         if(not id):
@@ -72,6 +74,11 @@ class ItemView(APIView):
             return Response( status=status.HTTP_400_BAD_REQUEST, data={"message" : f"No item with id={id}"} )
         item.delete()
         return Response( status=status.HTTP_200_OK, data={"message" : "Item was successfully deleted"} )
+
+class CategoryViewSet(ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [AdministrationPermission, ]
 
 # class CatalogueView(ListAPIView):
 #     queryset = Item.objects.all()

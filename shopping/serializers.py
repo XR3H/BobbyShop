@@ -1,6 +1,7 @@
 from django.db import transaction
 from rest_framework import serializers
 from shopping.models import *
+from shopping.permissions import *
 
 class ItemAttributeSerializer(serializers.Serializer):
     # attribute = serializers.PrimaryKeyRelatedField(queryset=Attribute.objects.all())
@@ -95,12 +96,16 @@ class ItemAttributeReadSerializer(serializers.ModelSerializer):
         exclude = ('id', 'fk_item')
         depth = 1
 
+
 class ItemReadSerializer(serializers.ModelSerializer):
     itemattribute_set = ItemAttributeReadSerializer(many=True, read_only=True)
     class Meta:
         model = Item
-        exclude = ('category',)
+        fields = '__all__'
+        depth = 1
 
 
-
-
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
