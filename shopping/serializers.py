@@ -109,3 +109,9 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = '__all__'
+
+
+class AttributeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attribute
+        fields = '__all__'

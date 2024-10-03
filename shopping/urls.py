@@ -4,6 +4,7 @@ from shopping.views import *
 
 router = routers.DefaultRouter()
 router.register('categories', CategoryViewSet, 'categories')
+router.register('attributes', AttributeViewSet, 'attributes')
 
 urlpatterns = [
     path('item/<int:id>', ItemView.as_view()),

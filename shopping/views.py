@@ -75,9 +75,16 @@ class ItemView(APIView):
         item.delete()
         return Response( status=status.HTTP_200_OK, data={"message" : "Item was successfully deleted"} )
 
+
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [AdministrationPermission, ]
+
+
+class AttributeViewSet(ModelViewSet):
+    queryset = Attribute.objects.all()
+    serializer_class = AttributeSerializer
     permission_classes = [AdministrationPermission, ]
 
 # class CatalogueView(ListAPIView):
