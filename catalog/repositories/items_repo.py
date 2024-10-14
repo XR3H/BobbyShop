@@ -2,7 +2,7 @@ from typing import Optional
 
 from django.db.models import QuerySet
 
-from shopping.models import Item
+from catalog.models import Item
 
 
 def all_items_with_attributes() -> Optional[ QuerySet[Item] ]:

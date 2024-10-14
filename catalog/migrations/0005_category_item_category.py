@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shopping', '0004_alter_itemattribute_table'),
+        ('catalog', '0004_alter_itemattribute_table'),
     ]
 
     operations = [
@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=45)),
-                ('fk_parent_category', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='shopping.category')),
+                ('fk_parent_category', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='catalog.category')),
             ],
             options={
                 'db_table': 'category',
@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='item',
             name='category',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.RESTRICT, to='shopping.category'),
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.RESTRICT, to='catalog.category'),
             preserve_default=False,
         ),
     ]

@@ -1,6 +1,6 @@
 from django.urls import path
 import rest_framework.routers as routers
-from shopping.views import *
+from catalog.views import *
 
 router = routers.DefaultRouter()
 router.register('categories', CategoryViewSet, 'categories')

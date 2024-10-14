@@ -1,7 +1,7 @@
 from django.db import transaction
 from rest_framework import serializers
-from shopping.models import *
-from shopping.permissions import *
+from catalog.models import *
+from catalog.permissions import *
 
 class ItemAttributeSerializer(serializers.Serializer):
     # attribute = serializers.PrimaryKeyRelatedField(queryset=Attribute.objects.all())

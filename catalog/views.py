@@ -5,11 +5,11 @@ from rest_framework import status
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from shopping.models import *
-from shopping.serializers import *
+from catalog.models import *
+from catalog.serializers import *
 from rest_framework.viewsets import *
 import rest_framework.permissions as permissions
-from shopping.repositories import items_repo
+from catalog.repositories import items_repo
 
 # Create your views here.
 

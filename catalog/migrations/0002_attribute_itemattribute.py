@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shopping', '0001_initial'),
+        ('catalog', '0001_initial'),
     ]
 
     operations = [
@@ -26,8 +26,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('value', models.CharField(max_length=30)),
-                ('fk_attribute', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='shopping.attribute')),
-                ('fk_item', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='shopping.item')),
+                ('fk_attribute', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='catalog.attribute')),
+                ('fk_item', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='catalog.item')),
             ],
             options={
                 'db_table': 'item_atrribute',

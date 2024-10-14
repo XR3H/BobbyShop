@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shopping', '0002_attribute_itemattribute'),
+        ('catalog', '0002_attribute_itemattribute'),
     ]
 
     operations = [

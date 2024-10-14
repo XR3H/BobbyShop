@@ -23,7 +23,6 @@ class Item(Model):
 
     @property
     def attributes(self):
-        # print(self.itemattribute_set.all())
         return ItemAttribute.objects.filter(fk_item=self).select_related('fk_attribute')
 
 class Attribute(Model):
