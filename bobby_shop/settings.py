@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'silk',
-    'catalog'
+    'catalog',
+    'cart'
 ]
 
 MIDDLEWARE = [
@@ -91,6 +92,8 @@ DATABASES = {
         'PASSWORD': 'vladnamazi0'
     }
 }
+
+AUTH_USER_MODEL = "auth.User"
 
 
 # Password validation
