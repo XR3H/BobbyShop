@@ -6,12 +6,13 @@ from catalog.permissions import *
 from cart.serializers import *
 from cart.repositories.orders_repo import *
 from catalog.repositories.items_repo import get_item
+import rest_framework.permissions as permissions
 
 
 # Create your views here.
 
 class CartView(views.APIView):
-    # permission_classes = [, ]
+    permission_classes = [permissions.AllowAny, ]
 
     def post(self, request, id=None):
         item = None
@@ -58,3 +59,19 @@ class CartView(views.APIView):
         )
         cart_order_data = CartOrderReadSerializer(cart_order)
         return Response(status=status.HTTP_200_OK, data={"data": cart_order_data.data})
+
+    def delete(self, request, id=None):
+        cart_order = prepare_cart_full(
+            client=request.user,
+            uuid=request.headers.get('UUID')
+        )
+
+        items = None
+        if not id:
+            items = get_order_items(order=cart_order)
+        else:
+            item = get_item(id=id)
+            items = get_order_items(order=cart_order, item=item)
+        items.delete()
+        return Response(status=status.HTTP_200_OK, data={"message": "Item was successfully deleted from cart."})
+

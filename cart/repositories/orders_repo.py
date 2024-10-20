@@ -82,3 +82,12 @@ def prepare_cart_full(client, uuid):
         select_related('status').
         get_or_create(**user_id, status=None)[0]
     )
+
+def get_order_items(order, item=None):
+    if not item:
+        return CartItem.objects.filter(
+            order=order
+        )
+    return CartItem.objects.get(
+        order=order, item=item
+    )
