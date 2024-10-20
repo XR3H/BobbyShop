@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from cart.models import Order
-from cart.repositories.orders_repo import add_to_cart, prepare_cart_order
+from cart.repositories.orders_repo import add_to_cart, set_cart_quantity
 
 
 class CartSerializer(serializers.Serializer):
@@ -14,4 +14,7 @@ class CartSerializer(serializers.Serializer):
         )
 
     def update(self, instance, validated_data):
-        pass
+        return set_cart_quantity(
+            cart_item=validated_data.get('cart'),
+            quantity=validated_data.get('quantity')
+        )

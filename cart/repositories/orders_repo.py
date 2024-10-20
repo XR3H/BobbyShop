@@ -67,3 +67,8 @@ def add_to_cart(order, item, quantity):
     cart_item.quantity += quantity
     cart_item.save()
     return cart_item
+
+def set_cart_quantity(cart_item, quantity):
+    cart_item.quantity = quantity
+    cart_item.save()
+    return cart_item

@@ -86,8 +86,3 @@ class AttributeViewSet(ModelViewSet):
     queryset = Attribute.objects.all()
     serializer_class = AttributeSerializer
     permission_classes = [AdministrationPermission, ]
-
-# class CatalogueView(ListAPIView):
-#     queryset = Item.objects.all()
-#     serializer_class = ItemReadSerializer
-#     permission_classes = (permissions.AllowAny,)
