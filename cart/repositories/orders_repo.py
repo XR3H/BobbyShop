@@ -43,6 +43,7 @@ def prepare_cart_order(client, uuid):
 
     if client.is_authenticated:
         cart, _ = Order.objects.get_or_create(client=client, status=None)
+    # to login
     if client.is_authenticated and uuid:
         unauth_cart = get_order_or_none(uuid=uuid, status=None)
         if unauth_cart:
@@ -72,3 +73,12 @@ def set_cart_quantity(cart_item, quantity):
     cart_item.quantity = quantity
     cart_item.save()
     return cart_item
+
+def prepare_cart_full(client, uuid):
+    user_id = {'client': client} if client.is_authenticated else {'uuid': uuid}
+    return (
+        Order.objects.
+        prefetch_related('cartitem_set__item').
+        select_related('status').
+        get_or_create(**user_id, status=None)[0]
+    )

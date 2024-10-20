@@ -50,3 +50,11 @@ class CartView(views.APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Data is not valid!"})
         cart_item_data.save(cart=cart_item)
         return Response(status=status.HTTP_200_OK, data={'message': 'OK'})
+
+    def get(self, request):
+        cart_order = prepare_cart_full(
+            client=request.user,
+            uuid=request.headers.get('UUID')
+        )
+        cart_order_data = CartOrderReadSerializer(cart_order)
+        return Response(status=status.HTTP_200_OK, data={"data": cart_order_data.data})

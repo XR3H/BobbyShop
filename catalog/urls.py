@@ -7,7 +7,7 @@ router.register('categories', CategoryViewSet, 'categories')
 router.register('attributes', AttributeViewSet, 'attributes')
 
 urlpatterns = [
-    path('item/<int:id>', ItemView.as_view()),
+    path('item/<int:id>/', ItemView.as_view()),
     path('item/', ItemView.as_view()),
 
 
