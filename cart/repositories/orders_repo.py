@@ -54,8 +54,14 @@ def prepare_cart_order(client, uuid):
     return cart
 
 
-def add_to_cart(order, item, quantity):
-    cart_item, _ = CartItem.objects.get_or_create(
+def set_cart_quantity(cart_item, quantity):
+    cart_item.quantity = quantity
+    cart_item.save()
+    return cart_item
+
+
+def get_cart_item(item, order):
+    return CartItem.objects.get_or_create(
         order=order,
         item=item,
         defaults={
@@ -65,14 +71,6 @@ def add_to_cart(order, item, quantity):
             'item': item
         }
     )
-    cart_item.quantity += quantity
-    cart_item.save()
-    return cart_item
-
-def set_cart_quantity(cart_item, quantity):
-    cart_item.quantity = quantity
-    cart_item.save()
-    return cart_item
 
 def prepare_cart_full(client, uuid):
     user_id = {'client': client} if client.is_authenticated else {'uuid': uuid}
